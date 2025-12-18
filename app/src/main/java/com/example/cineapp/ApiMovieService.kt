@@ -11,5 +11,11 @@ interface ApiMovieService {
     @GET("popular?language=en-US&page=1")
     fun getPopularMovies(): Call<MovieResponse>
 
+    @GET("top_rated?language=en-US&page=1")
+    fun getTopRatedMovies(): Call<MovieResponse>
+
+    @GET("upcoming?language=en-US&page=1")
+    fun getUpComingMovies(): Call<MovieResponse>
+
 }
 

@@ -54,9 +54,19 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf<List<MovieDTO>>(emptyList())
                 }
 
+                var topRatedMovies by remember{
+                    mutableStateOf<List<MovieDTO>>(emptyList())
+                }
+
+                var upComingMovies by remember{
+                    mutableStateOf<List<MovieDTO>>(emptyList())
+                }
+
                 val apiService = RetrofitClient.retrofit.create(ApiMovieService::class.java)
                 val callNowPlaying = apiService.getNowPlayingMovies()
                 val callPopular = apiService.getPopularMovies()
+                val callTopRated = apiService.getTopRatedMovies()
+                val callUpComing = apiService.getUpComingMovies()
 
                 callNowPlaying.enqueue(object : Callback<MovieResponse> {
                     override fun onResponse(
@@ -106,6 +116,54 @@ class MainActivity : ComponentActivity() {
 
                 })
 
+                callTopRated.enqueue(object : Callback<MovieResponse>{
+                    override fun onResponse(
+                        call: Call<MovieResponse?>,
+                        response: Response<MovieResponse?>
+                    ) {
+                        if(response.isSuccessful){
+                            val responseTopRated = response.body()?.results
+                            if (responseTopRated != null){
+                                topRatedMovies = responseTopRated
+                            }
+                        }else{
+                            Log.d("MainActivity", "Request Error: ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<MovieResponse?>,
+                        t: Throwable
+                    ) {
+                        Log.d("MainActivity", "NetworkError: ${t.message}")
+                    }
+
+                })
+
+                callUpComing.enqueue(object : Callback<MovieResponse>{
+                    override fun onResponse(
+                        call: Call<MovieResponse?>,
+                        response: Response<MovieResponse?>
+                    ) {
+                        if(response.isSuccessful){
+                            val responseUpComing = response.body()?.results
+                            if (responseUpComing != null){
+                                upComingMovies = responseUpComing
+                            }
+                        }else{
+                            Log.d("MainActivity", "Request error: ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<MovieResponse?>,
+                        t: Throwable
+                    ) {
+                        Log.d("MainActivity", "Network error: ${t.message}")
+                    }
+
+                })
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(
                         modifier = Modifier
@@ -126,6 +184,18 @@ class MainActivity : ComponentActivity() {
                             MovieSession(
                                 label = "Most Popular Movies",
                                 movieList = popularMovies,
+                                onClick = { movieClick ->
+
+                                })
+                            MovieSession(
+                                label = "Top Rated Movies",
+                                movieList = topRatedMovies,
+                                onClick = { movieClick ->
+
+                                })
+                            MovieSession(
+                                label = "Upcoming Movies",
+                                movieList = upComingMovies,
                                 onClick = { movieClick ->
 
                                 })
