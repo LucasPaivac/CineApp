@@ -2,6 +2,7 @@ package com.example.cineapp
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface ApiMovieService {
 
@@ -16,6 +17,9 @@ interface ApiMovieService {
 
     @GET("upcoming?language=en-US&page=1")
     fun getUpComingMovies(): Call<MovieResponse>
+
+    @GET("{movie_id}?language=en-US")
+    fun getMovieDetail(@Path("movie_id") movieId: String): Call<MovieDTO>
 
 }
 

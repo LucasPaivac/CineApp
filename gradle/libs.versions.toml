@@ -12,6 +12,7 @@ json = "1.8.0"
 retrofit = "3.0.0"
 gson-converter = "3.0.0"
 coil = "3.2.0"
+navigation = "2.9.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ retrofit-core = {group = "com.squareup.retrofit2", name = "retrofit", version.re
 retrofit-gson-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson-converter"}
 coil-compose = {group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
 coil-network = {group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
+androidx-navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
