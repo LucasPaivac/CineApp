@@ -8,10 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import com.example.cineapp.designsystem.CustomTopAppBar
 import com.example.cineapp.ui.theme.CineAppTheme
 
 class MainActivity : ComponentActivity() {

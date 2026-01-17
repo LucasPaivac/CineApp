@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.cineapp.detail.presentation.ui.MovieDetailScreen
+import com.example.cineapp.list.presentation.ui.MovieListScreen
 
 @Composable
 fun CineApp() {

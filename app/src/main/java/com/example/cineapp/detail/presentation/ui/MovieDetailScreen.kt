@@ -1,7 +1,6 @@
-package com.example.cineapp
+package com.example.cineapp.detail.presentation.ui
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
+import com.example.cineapp.ApiMovieService
+import com.example.cineapp.common.model.MovieDTO
+import com.example.cineapp.common.data.RetrofitClient
 import com.example.cineapp.ui.theme.CineAppTheme
 import retrofit2.Call
 import retrofit2.Callback
