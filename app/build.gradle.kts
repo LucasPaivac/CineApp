@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.ksp)
 }
 
 android {
@@ -75,6 +76,12 @@ dependencies {
     implementation(libs.retrofit.gson.converter)
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
+
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.guava)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
