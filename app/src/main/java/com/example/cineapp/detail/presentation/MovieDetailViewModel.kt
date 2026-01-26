@@ -8,7 +8,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.cineapp.common.data.RetrofitClient
 import com.example.cineapp.common.model.MovieDTO
 import com.example.cineapp.detail.data.DetailService
-import com.example.cineapp.list.data.ListService
+import com.example.cineapp.list.data.remote.ListService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

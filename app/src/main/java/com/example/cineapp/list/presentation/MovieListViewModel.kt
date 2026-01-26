@@ -3,10 +3,13 @@ package com.example.cineapp.list.presentation
 import android.accounts.NetworkErrorException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.cineapp.common.data.RetrofitClient
-import com.example.cineapp.list.data.ListService
+import com.example.cineapp.common.data.local.CineAppApplication
+import com.example.cineapp.common.data.local.CineAppDataBase
+import com.example.cineapp.list.data.remote.ListService
 import com.example.cineapp.list.data.ListRepository
 import com.example.cineapp.list.presentation.ui.ListUiState
 import com.example.cineapp.list.presentation.ui.MovieUiData
@@ -199,10 +202,10 @@ class MovieListViewModel(
 
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-                val listService = RetrofitClient.retrofit.create(ListService::class.java)
-                val repository = ListRepository(listService = listService)
+
+                val application = checkNotNull(extras[APPLICATION_KEY])
                 return MovieListViewModel(
-                    repository = repository
+                    repository = (application as CineAppApplication).repository
                 ) as T
             }
         }

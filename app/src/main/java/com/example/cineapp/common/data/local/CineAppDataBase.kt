@@ -5,4 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database([MovieEntity::class], version = 1)
 abstract class CineAppDataBase: RoomDatabase() {
+
+    abstract fun getMovieDao(): MovieDao
+
 }
