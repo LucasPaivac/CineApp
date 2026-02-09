@@ -11,7 +11,6 @@ import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.detail.model.DetailUiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

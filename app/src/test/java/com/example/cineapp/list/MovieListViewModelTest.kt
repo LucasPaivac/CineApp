@@ -4,12 +4,12 @@ import android.accounts.NetworkErrorException
 import app.cash.turbine.test
 import com.example.cineapp.common.data.local.MovieCategory
 import com.example.cineapp.common.model.MovieList
+import com.example.cineapp.common.model.MovieUiData
 import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.screens.list.model.MovieListUiEvent
 import com.example.cineapp.screens.list.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
-import com.example.cineapp.screens.list.model.MovieUiData
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
@@ -76,7 +76,7 @@ class MovieListViewModelTest {
 
             whenever(repository.getNowPlayingMovies()).thenReturn(Result.failure(UnknownHostException()))
 
-            val result = underTest.uiNowPlaying.test {
+            underTest.uiNowPlaying.test {
                 val expected = ListUiState(isError = true, errorMessage = "No connection")
                 assertEquals(expected, awaitItem())
             }
@@ -90,7 +90,7 @@ class MovieListViewModelTest {
 
             whenever(repository.getNowPlayingMovies()).thenReturn(Result.failure(NetworkErrorException()))
 
-            val result = underTest.uiNowPlaying.test {
+            underTest.uiNowPlaying.test {
                 val expected = ListUiState(isError = true, errorMessage = "Server Error")
                 assertEquals(expected, awaitItem())
             }
@@ -105,7 +105,7 @@ class MovieListViewModelTest {
 
             whenever(repository.getNowPlayingMovies()).thenReturn(Result.failure(Exception()))
 
-            val result = underTest.uiNowPlaying.test {
+            underTest.uiNowPlaying.test {
                 val expected = ListUiState(isError = true)
                 assertEquals(expected, awaitItem())
             }
