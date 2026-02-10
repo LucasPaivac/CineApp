@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,10 +28,10 @@ import com.example.cineapp.ui.theme.CineAppTheme
 
 @Composable
 fun CustomTopAppBar(
-    logoImage: Painter,
     labelScreen: String,
     downloadIcon: Painter,
     searchIcon: Painter,
+    menuIcon: Painter,
     onDownloadClick: () -> Unit,
     onSearchClick: () -> Unit
 ) {
@@ -39,43 +40,45 @@ fun CustomTopAppBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Color.Transparent)
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+
         ) {
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    modifier = Modifier
-                        .width(31.dp)
-                        .height(47.dp),
-                    painter = logoImage, contentDescription = "Image Logo"
-                )
-
-                Spacer(modifier = Modifier.size(8.dp))
-
+            Row(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+            ){
                 Text(
                     text = labelScreen,
                     fontSize = 24.sp,
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
+
+            Row(
+                modifier = Modifier
+                    .padding(end = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Image(
                     modifier = Modifier
                         .width(31.dp)
                         .height(47.dp),
                     painter = downloadIcon, contentDescription = "Image Logo"
                 )
-
-                Spacer(modifier = Modifier.size(8.dp))
-
                 Image(
                     modifier = Modifier
                         .width(31.dp)
                         .height(47.dp),
                     painter = searchIcon, contentDescription = "Image Logo"
+                )
+                Image(
+                    modifier = Modifier
+                        .width(31.dp)
+                        .height(47.dp),
+                    painter = menuIcon, contentDescription = "Image Logo"
                 )
             }
 
@@ -88,20 +91,23 @@ fun CustomTopAppBar(
 @Preview(showBackground = true)
 @Composable
 private fun CustomTopAppBarPreview() {
-    CineAppTheme {
-        Column(
-            modifier = Modifier
-                .background(Color.Black)
-        ) {
-            CustomTopAppBar(
-                logoImage = painterResource(R.drawable.logo),
-                labelScreen = "Ínicio",
-                downloadIcon = painterResource(R.drawable.ic_download),
-                searchIcon = painterResource(R.drawable.ic_search),
-                onDownloadClick = { },
-                onSearchClick = { }
-            )
+    CineAppTheme(
+        darkTheme = true
+    ) {
+        Surface() {
+
+            Column() {
+                CustomTopAppBar(
+                    labelScreen = "Ínicio",
+                    downloadIcon = painterResource(R.drawable.ic_download),
+                    searchIcon = painterResource(R.drawable.ic_search),
+                    menuIcon = painterResource(R.drawable.ic_outline_menu),
+                    onDownloadClick = { },
+                    onSearchClick = { }
+                )
+            }
         }
+
 
     }
 

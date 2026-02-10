@@ -2,13 +2,11 @@ package com.example.cineapp.detail
 
 import android.accounts.NetworkErrorException
 import app.cash.turbine.test
-import com.example.cineapp.common.data.remote.model.MovieDTO
 import com.example.cineapp.common.model.MovieDetail
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.detail.MovieDetailViewModel
 import com.example.cineapp.screens.detail.model.DetailUiState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -42,7 +40,8 @@ class MovieDetailViewModelTest {
                 id = 1,
                 title = "title1",
                 overview = "overview1",
-                image = "image1",
+                imagePoster = "Image1",
+                imageBanner = "Image1"
             )
 
             whenever(repository.getMovieDetail("1")).thenReturn(Result.success(movieDetail))

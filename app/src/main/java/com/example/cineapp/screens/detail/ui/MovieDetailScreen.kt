@@ -81,7 +81,7 @@ private fun MovieDetailContent(
                 .height(200.dp)
                 .fillMaxSize(),
             contentScale = ContentScale.Crop,
-            model = detail.movie.image,
+            model = detail.movie.imagePoster,
             contentDescription = "${detail.movie.title} Poster image"
         )
 

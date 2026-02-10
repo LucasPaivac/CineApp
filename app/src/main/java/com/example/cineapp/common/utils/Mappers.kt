@@ -11,36 +11,49 @@ fun MovieDTO.toMovieList(category: MovieCategory) = MovieList(
     id = id,
     title = title,
     overview = overview,
-    image = posterFullPath,
+    imagePoster = posterFullPath,
+    imageBanner = backdropFullPath,
     category = category.name,
 )
 fun MovieDTO.toMovieDetail() = MovieDetail(
     id = id,
     title = title,
     overview = overview,
-    image = posterFullPath,
+    imagePoster = posterFullPath,
+    imageBanner = backdropFullPath
 )
 fun MovieDTO.toEntity(category: MovieCategory) = MovieEntity(
     id = id,
     title = title,
     overview = overview,
-    image = posterFullPath,
+    imagePoster = posterFullPath,
+    imageBanner = backdropFullPath,
     category = category.name,
 )
 fun MovieEntity.toMovieList() = MovieList(
     id = id,
     title = title,
     overview = overview,
-    image = image,
+    imagePoster = imagePoster,
+    imageBanner = imageBanner,
     category = category,
 )
 
+fun MovieList.toMovieUiData() = MovieUiData(
+    id = id,
+    title = title,
+    overview = overview,
+    imagePoster = imagePoster,
+    imageBanner = imageBanner,
+)
 fun MovieDetail.toMovieUiData() = MovieUiData(
     id = id,
     title = title,
     overview = overview,
-    image = image,
+    imagePoster = imagePoster,
+    imageBanner = imageBanner
 )
+
 
 
 

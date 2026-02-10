@@ -18,7 +18,9 @@ class CineAppApplication: Application() {
         Room.databaseBuilder(
             applicationContext,
             CineAppDataBase::class.java, "database-cine-app"
-        ).build()
+        )
+            .fallbackToDestructiveMigration(dropAllTables = true)
+            .build()
     }
 
     private val movieService by lazy{

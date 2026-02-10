@@ -9,6 +9,7 @@ import com.example.cineapp.CineAppApplication
 import com.example.cineapp.common.model.MovieUiData
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.NetworkChecker
+import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.list.model.ListUiState
 import com.example.cineapp.screens.list.model.MovieListUiEvent
 import kotlinx.coroutines.CoroutineDispatcher
@@ -62,12 +63,7 @@ class MovieListViewModel(
                 val movies = result.getOrNull()
                 if (movies != null) {
                     val listUiData = movies.map {
-                        MovieUiData(
-                            id = it.id,
-                            title = it.title,
-                            overview = it.overview,
-                            image = it.image
-                        )
+                        it.toMovieUiData()
                     }
                     _uiNowPlaying.value = ListUiState(list = listUiData)
                 }
@@ -100,12 +96,7 @@ class MovieListViewModel(
                 val movies = result.getOrNull()
                 if (movies != null) {
                     val listUiData = movies.map {
-                        MovieUiData(
-                            id = it.id,
-                            title = it.title,
-                            overview = it.overview,
-                            image = it.image
-                        )
+                        it.toMovieUiData()
                     }
                     _uiMostPopular.value = ListUiState(list = listUiData)
                 }
@@ -138,12 +129,7 @@ class MovieListViewModel(
                 val movies = result.getOrNull()
                 if (movies != null) {
                     val listUiData = movies.map {
-                        MovieUiData(
-                            id = it.id,
-                            title = it.title,
-                            overview = it.overview,
-                            image = it.image
-                        )
+                        it.toMovieUiData()
                     }
                     _uiTopRated.value = ListUiState(list = listUiData)
                 }
@@ -176,12 +162,7 @@ class MovieListViewModel(
                 val movies = result.getOrNull()
                 if (movies != null) {
                     val listUiData = movies.map {
-                        MovieUiData(
-                            id = it.id,
-                            title = it.title,
-                            overview = it.overview,
-                            image = it.image
-                        )
+                        it.toMovieUiData()
                     }
                     _uiUpComing.value = ListUiState(list = listUiData)
                 }

@@ -2,6 +2,7 @@ package com.example.cineapp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import com.example.cineapp.screens.detail.MovieDetailViewModel
 import com.example.cineapp.screens.list.MovieListViewModel
 import com.example.cineapp.ui.theme.CineAppTheme
+
 
 class MainActivity : ComponentActivity() {
 
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
 
                     Column(
                         modifier = Modifier
-                            .padding(innerPadding)
+                            .padding(top = innerPadding.calculateTopPadding())
                     ) {
                         CineApp(
                             snackbarHostState = snackBarHostState,

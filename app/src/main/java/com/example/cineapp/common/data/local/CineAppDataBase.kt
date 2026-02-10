@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.cineapp.common.data.local.model.MovieEntity
 
-@Database([MovieEntity::class], version = 1)
+@Database([MovieEntity::class], version = 2)
 abstract class CineAppDataBase: RoomDatabase() {
 
     abstract fun getMovieDao(): MovieDao

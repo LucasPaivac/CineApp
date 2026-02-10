@@ -10,7 +10,8 @@ data class MovieEntity(
     val id: Int,
     val title: String,
     val overview: String,
-    val image: String,
+    val imagePoster: String,
+    val imageBanner: String,
     @ColumnInfo(name = "category")
-    val category: String
+    val category: String,
 )

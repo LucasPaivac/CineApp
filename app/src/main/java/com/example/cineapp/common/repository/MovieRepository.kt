@@ -1,5 +1,6 @@
 package com.example.cineapp.common.repository
 
+import android.util.Log
 import com.example.cineapp.common.data.local.MovieCategory
 import com.example.cineapp.common.model.MovieList
 import com.example.cineapp.common.data.local.datasource.LocalDataSource

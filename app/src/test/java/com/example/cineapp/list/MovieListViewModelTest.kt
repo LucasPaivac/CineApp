@@ -7,6 +7,7 @@ import com.example.cineapp.common.model.MovieList
 import com.example.cineapp.common.model.MovieUiData
 import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.repository.MovieRepository
+import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.list.model.MovieListUiEvent
 import com.example.cineapp.screens.list.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
@@ -43,7 +44,8 @@ class MovieListViewModelTest {
                     id = 1,
                     title = "title1",
                     overview = "overview1",
-                    image = "image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.NowPlaying.name,
                 )
             )
@@ -54,14 +56,7 @@ class MovieListViewModelTest {
 
                 //Then assert expected value
                 val expected = ListUiState(
-                    list = listOf(
-                        MovieUiData(
-                            id = 1,
-                            title = "title1",
-                            overview = "overview1",
-                            image = "image1",
-                        )
-                    )
+                    list = movieLists.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -123,7 +118,8 @@ class MovieListViewModelTest {
                     id = 1,
                     title = "title1",
                     overview = "overview1",
-                    image = "image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.Popular.name,
                 )
             )
@@ -133,14 +129,7 @@ class MovieListViewModelTest {
             underTest.uiMostPopular.test {
 
                 val expected = ListUiState(
-                    list = listOf(
-                        MovieUiData(
-                            id = 1,
-                            title = "title1",
-                            overview = "overview1",
-                            image = "image1",
-                        )
-                    )
+                    list = movieLists.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -203,7 +192,8 @@ class MovieListViewModelTest {
                     id = 1,
                     title = "title1",
                     overview = "overview1",
-                    image = "image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.TopRated.name
                 )
             )
@@ -213,14 +203,7 @@ class MovieListViewModelTest {
             underTest.uiTopRated.test {
 
                 val expected = ListUiState(
-                    list = listOf(
-                        MovieUiData(
-                            id = 1,
-                            title = "title1",
-                            overview = "overview1",
-                            image = "image1"
-                        )
-                    )
+                    list = movieLists.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -283,7 +266,8 @@ class MovieListViewModelTest {
                     id = 1,
                     title = "title1",
                     overview = "overview1",
-                    image = "image1",
+                    imagePoster = "image1",
+                    imageBanner = "image1",
                     category = MovieCategory.Upcoming.name
                 )
             )
@@ -293,14 +277,7 @@ class MovieListViewModelTest {
             underTest.uiUpComing.test {
 
                 val expected = ListUiState(
-                    list = listOf(
-                        MovieUiData(
-                            id = 1,
-                            title = "title1",
-                            overview = "overview1",
-                            image = "image1"
-                        )
-                    )
+                    list = movieLists.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())

@@ -39,7 +39,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    image = "Image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.NowPlaying.name,
                 )
             )
@@ -79,7 +80,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    postPath = "Image1"
+                    postPath = "Image1",
+                    backdropPath = "Image1"
                 )
             )
 
@@ -110,7 +112,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    image = "Image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.Popular.name,
                 )
             )
@@ -152,7 +155,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    postPath = "Image1"
+                    postPath = "Image1",
+                    backdropPath = "Image1"
                 )
             )
 
@@ -179,7 +183,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    image = "Image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.TopRated.name,
                 )
             )
@@ -222,7 +227,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    postPath = "Image1"
+                    postPath = "Image1",
+                    backdropPath = "Image1"
                 )
             )
 
@@ -248,7 +254,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    image = "Image1",
+                    imagePoster = "Image1",
+                    imageBanner = "Image1",
                     category = MovieCategory.Upcoming.name,
                 )
             )
@@ -291,7 +298,8 @@ class MovieRepositoryTest {
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
-                    postPath = "Image1"
+                    postPath = "Image1",
+                    backdropPath = "Image1"
                 )
             )
 
@@ -315,7 +323,8 @@ class MovieRepositoryTest {
                 id = 1,
                 title = "title1",
                 overview = "overview1",
-                postPath = "image1",
+                postPath = "Image1",
+                backdropPath = "Image1"
             )
 
             whenever(remote.getMovieDetail("1")).thenReturn(Result.success(remoteMovie))

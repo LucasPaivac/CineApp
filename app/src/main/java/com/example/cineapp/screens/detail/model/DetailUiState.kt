@@ -7,7 +7,8 @@ data class DetailUiState(
         id = 0,
         title = "",
         overview = "",
-        image = "",
+        imagePoster = "",
+        imageBanner = ""
     ),
     val isLoading: Boolean = false,
     val isError: Boolean = false,

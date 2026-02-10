@@ -7,8 +7,13 @@ data class MovieDTO(
     val title: String,
     val overview: String,
     @SerializedName("poster_path")
-    val postPath: String
+    val postPath: String,
+    @SerializedName("backdrop_path")
+    val backdropPath: String
 ){
     val posterFullPath: String
         get() = "https://image.tmdb.org/t/p/w300/$postPath"
+
+    val backdropFullPath: String
+        get() = "https://image.tmdb.org/t/p/w780/$backdropPath"
 }
