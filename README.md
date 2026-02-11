@@ -1,7 +1,7 @@
 # 🎬 CineApp
 O CineApp é um aplicativo Android moderno que permite aos usuários explorar o vasto catálogo do TMDB. O foco principal deste projeto foi aplicar os padrões mais recentes de desenvolvimento nativo com Jetpack Compose, priorizando performance, legibilidade de código e uma interface imersiva.
 
-📸 Screenshots
+## 📸 Screenshots
 <p align="center"> <img src="screenshots/list_screen.jpeg" width="300" alt="List Screen" /> <img src="screenshots/details_screen.jpeg" width="300" alt="Details Screen" /> </p>
 
 ## 🚀 Tecnologias e Habilidades
