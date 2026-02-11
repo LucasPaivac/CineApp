@@ -2,8 +2,9 @@ package com.example.cineapp.detail
 
 import android.accounts.NetworkErrorException
 import app.cash.turbine.test
-import com.example.cineapp.common.model.MovieDetail
+import com.example.cineapp.screens.detail.model.DetailMovie
 import com.example.cineapp.common.repository.MovieRepository
+import com.example.cineapp.common.utils.toDetailMovieUiData
 import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.detail.MovieDetailViewModel
 import com.example.cineapp.screens.detail.model.DetailUiState
@@ -36,20 +37,25 @@ class MovieDetailViewModelTest {
     fun `Given composable activate the viewModel When colleting DetailMovie remote Then Result success with the MovieDetail`(){
         runTest {
 
-            val movieDetail = MovieDetail(
+            val detailMovie = DetailMovie(
                 id = 1,
                 title = "title1",
                 overview = "overview1",
                 imagePoster = "Image1",
-                imageBanner = "Image1"
+                imageBanner = "Image1",
+                genre = "Teste",
+                releaseYear = "Teste",
+                runtime = "Teste",
+                voteAverage = "Teste",
+                cast = emptyList(),
             )
 
-            whenever(repository.getMovieDetail("1")).thenReturn(Result.success(movieDetail))
+            whenever(repository.getMovieDetail("1")).thenReturn(Result.success(detailMovie))
 
             underTest.uiMovieDetail.test {
                 underTest.fetchDetailMovie("1")
 
-                val expected = DetailUiState(movie = movieDetail.toMovieUiData())
+                val expected = DetailUiState(movie = detailMovie.toDetailMovieUiData())
 
                 assertEquals(expected, expectMostRecentItem())
             }
@@ -60,7 +66,7 @@ class MovieDetailViewModelTest {
     fun `Given composable activate the ViewModel and no connection with internet When collecting DetailMovie remote Then Result Falirure with the corresponding exception`(){
         runTest {
 
-            val result = Result.failure<MovieDetail>(UnknownHostException())
+            val result = Result.failure<DetailMovie>(UnknownHostException())
 
             whenever(repository.getMovieDetail("1")).thenReturn(result)
 
@@ -78,7 +84,7 @@ class MovieDetailViewModelTest {
     fun `Given composable activate the ViewModel and have a server error When collecting DetailMovie remote Then Result Falirure with the corresponding exception`(){
         runTest {
 
-            val result = Result.failure<MovieDetail>(NetworkErrorException())
+            val result = Result.failure<DetailMovie>(NetworkErrorException())
 
             whenever(repository.getMovieDetail("1")).thenReturn(result)
 
@@ -96,7 +102,7 @@ class MovieDetailViewModelTest {
     fun `Given composable activate the ViewModel and have other error When collecting DetailMovie remote Then Result Falirure with the corresponding exception`(){
         runTest {
 
-            val result = Result.failure<MovieDetail>(Exception())
+            val result = Result.failure<DetailMovie>(Exception())
 
             whenever(repository.getMovieDetail("1")).thenReturn(result)
 

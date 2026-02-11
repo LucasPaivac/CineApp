@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.cineapp.CineAppApplication
-import com.example.cineapp.common.model.MovieUiData
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.list.model.ListUiState
-import com.example.cineapp.screens.list.model.MovieListUiEvent
+import com.example.cineapp.screens.list.model.ListMovieUiEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,11 +26,11 @@ class MovieListViewModel(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
-    private val _uiEvent = MutableSharedFlow<MovieListUiEvent>(
+    private val _uiEvent = MutableSharedFlow<ListMovieUiEvent>(
         replay = 0,
         extraBufferCapacity = 0
     )
-    val uiEvent: SharedFlow<MovieListUiEvent> = _uiEvent
+    val uiEvent: SharedFlow<ListMovieUiEvent> = _uiEvent
 
     private val _uiNowPlaying = MutableStateFlow(ListUiState())
     val uiNowPlaying: StateFlow<ListUiState> = _uiNowPlaying
@@ -191,13 +190,13 @@ class MovieListViewModel(
         viewModelScope.launch {
             if (networkChecker.hasInternet()){
                 _uiEvent.emit(
-                    MovieListUiEvent.NavigateToDetails(movieId)
+                    ListMovieUiEvent.NavigateToDetails(movieId)
                 )
             }else{
                 if (!isSnackbarShowing){
                     isSnackbarShowing = true
                     _uiEvent.emit(
-                        MovieListUiEvent.ShowMessage("No internet connection")
+                        ListMovieUiEvent.ShowMessage("No internet connection")
                     )
                 }
             }

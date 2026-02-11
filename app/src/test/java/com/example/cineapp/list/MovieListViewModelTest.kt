@@ -3,12 +3,11 @@ package com.example.cineapp.list
 import android.accounts.NetworkErrorException
 import app.cash.turbine.test
 import com.example.cineapp.common.data.local.MovieCategory
-import com.example.cineapp.common.model.MovieList
-import com.example.cineapp.common.model.MovieUiData
+import com.example.cineapp.screens.list.model.ListMovie
 import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.toMovieUiData
-import com.example.cineapp.screens.list.model.MovieListUiEvent
+import com.example.cineapp.screens.list.model.ListMovieUiEvent
 import com.example.cineapp.screens.list.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
 import junit.framework.TestCase.assertEquals
@@ -39,8 +38,8 @@ class MovieListViewModelTest {
     fun `Given fresh viewModel When collecting to nowPlaying Then assert expected value`() {
         runTest {
             //Given
-            val movieLists = listOf(
-                MovieList(
+            val listMovies = listOf(
+                ListMovie(
                     id = 1,
                     title = "title1",
                     overview = "overview1",
@@ -49,14 +48,14 @@ class MovieListViewModelTest {
                     category = MovieCategory.NowPlaying.name,
                 )
             )
-            whenever(repository.getNowPlayingMovies()).thenReturn(Result.success(movieLists))
+            whenever(repository.getNowPlayingMovies()).thenReturn(Result.success(listMovies))
 
             //When
             underTest.uiNowPlaying.test {
 
                 //Then assert expected value
                 val expected = ListUiState(
-                    list = movieLists.map { it.toMovieUiData() }
+                    list = listMovies.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -113,8 +112,8 @@ class MovieListViewModelTest {
     @Test
     fun `Given fresh viewModel When collecting to popular Then assert expected value`() {
         runTest {
-            val movieLists = listOf(
-                MovieList(
+            val listMovies = listOf(
+                ListMovie(
                     id = 1,
                     title = "title1",
                     overview = "overview1",
@@ -124,12 +123,12 @@ class MovieListViewModelTest {
                 )
             )
 
-            whenever(repository.getPopularMovies()).thenReturn(Result.success(movieLists))
+            whenever(repository.getPopularMovies()).thenReturn(Result.success(listMovies))
 
             underTest.uiMostPopular.test {
 
                 val expected = ListUiState(
-                    list = movieLists.map { it.toMovieUiData() }
+                    list = listMovies.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -187,8 +186,8 @@ class MovieListViewModelTest {
     @Test
     fun `Given fresh viewModel When collecting to topRated Then assert expected value`() {
         runTest {
-            val movieLists = listOf(
-                MovieList(
+            val listMovies = listOf(
+                ListMovie(
                     id = 1,
                     title = "title1",
                     overview = "overview1",
@@ -198,12 +197,12 @@ class MovieListViewModelTest {
                 )
             )
 
-            whenever(repository.getTopRatedMovies()).thenReturn(Result.success(movieLists))
+            whenever(repository.getTopRatedMovies()).thenReturn(Result.success(listMovies))
 
             underTest.uiTopRated.test {
 
                 val expected = ListUiState(
-                    list = movieLists.map { it.toMovieUiData() }
+                    list = listMovies.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -261,8 +260,8 @@ class MovieListViewModelTest {
     fun `Given fresh viewModel When collecting to upComing Then assert expected value`() {
         runTest {
 
-            val movieLists = listOf(
-                MovieList(
+            val listMovies = listOf(
+                ListMovie(
                     id = 1,
                     title = "title1",
                     overview = "overview1",
@@ -272,12 +271,12 @@ class MovieListViewModelTest {
                 )
             )
 
-            whenever(repository.getUpComingMovies()).thenReturn(Result.success(movieLists))
+            whenever(repository.getUpComingMovies()).thenReturn(Result.success(listMovies))
 
             underTest.uiUpComing.test {
 
                 val expected = ListUiState(
-                    list = movieLists.map { it.toMovieUiData() }
+                    list = listMovies.map { it.toMovieUiData() }
                 )
 
                 assertEquals(expected, awaitItem())
@@ -336,7 +335,7 @@ class MovieListViewModelTest {
 
             underTest.uiEvent.test {
                 underTest.onMovieClicked(movieId)
-                val expected = MovieListUiEvent.NavigateToDetails(movieId)
+                val expected = ListMovieUiEvent.NavigateToDetails(movieId)
                 assertEquals(expected, awaitItem())
             }
         }
@@ -356,7 +355,7 @@ class MovieListViewModelTest {
                 underTest.onSnackbarDismissed()
                 underTest.onMovieClicked(movieId)
 
-                val expected = MovieListUiEvent.ShowMessage("No internet connection")
+                val expected = ListMovieUiEvent.ShowMessage("No internet connection")
                 assertEquals(expected, awaitItem())
             }
         }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.cineapp.CineAppApplication
 import com.example.cineapp.common.repository.MovieRepository
+import com.example.cineapp.common.utils.toDetailMovieUiData
 import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.detail.model.DetailUiState
 import kotlinx.coroutines.CoroutineDispatcher
@@ -33,7 +34,7 @@ class MovieDetailViewModel(
             if (result.isSuccess) {
                 val movie = result.getOrNull()
                 if(movie != null){
-                    _uiMovieDetail.value = DetailUiState(movie = movie.toMovieUiData())
+                    _uiMovieDetail.value = DetailUiState(movie = movie.toDetailMovieUiData())
                 }
 
             } else {

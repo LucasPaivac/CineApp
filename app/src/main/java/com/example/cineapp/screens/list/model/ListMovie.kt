@@ -1,9 +1,10 @@
-package com.example.cineapp.common.model
+package com.example.cineapp.screens.list.model
 
-data class MovieUiData(
+data class ListMovie(
     val id: Int,
     val title: String,
     val overview: String,
     val imagePoster: String,
     val imageBanner: String,
+    val category: String
 )

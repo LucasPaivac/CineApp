@@ -1,13 +1,14 @@
 package com.example.cineapp.common.data.remote.datasource
 
 import android.accounts.NetworkErrorException
-import com.example.cineapp.common.data.remote.model.MovieDTO
-import com.example.cineapp.common.data.service.MovieService
+import com.example.cineapp.common.data.remote.model.DetailMovieDTO
+import com.example.cineapp.common.data.remote.model.ListMovieDTO
+import com.example.cineapp.common.data.remote.service.MovieService
 
 class RemoteDataSource(
     private val service: MovieService
 ) {
-    suspend fun getNowPlayingMovies(): Result<List<MovieDTO>?> {
+    suspend fun getNowPlayingMovies(): Result<List<ListMovieDTO>?> {
 
         return try {
             val response = service.getNowPlayingMovies()
@@ -24,7 +25,7 @@ class RemoteDataSource(
         }
     }
 
-    suspend fun getPopularMovies(): Result<List<MovieDTO>?> {
+    suspend fun getPopularMovies(): Result<List<ListMovieDTO>?> {
         return try {
             val response = service.getPopularMovies()
             if (response.isSuccessful) {
@@ -40,7 +41,7 @@ class RemoteDataSource(
         }
     }
 
-    suspend fun getTopRatedMovies(): Result<List<MovieDTO>?> {
+    suspend fun getTopRatedMovies(): Result<List<ListMovieDTO>?> {
 
         return try {
             val response = service.getTopRatedMovies()
@@ -57,7 +58,7 @@ class RemoteDataSource(
         }
     }
 
-    suspend fun getUpComingMovies(): Result<List<MovieDTO>?> {
+    suspend fun getUpComingMovies(): Result<List<ListMovieDTO>?> {
 
         return try {
             val response = service.getUpComingMovies()
@@ -73,7 +74,7 @@ class RemoteDataSource(
         }
     }
 
-    suspend fun getMovieDetail(movieId: String): Result<MovieDTO?>{
+    suspend fun getMovieDetail(movieId: String): Result<DetailMovieDTO?>{
          return try {
              val response = service.getMovieDetail(movieId)
              if (response.isSuccessful){

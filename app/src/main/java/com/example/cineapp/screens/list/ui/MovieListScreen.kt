@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -30,15 +28,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.BlurEffect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,11 +40,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.cineapp.R
-import com.example.cineapp.common.model.MovieUiData
+import com.example.cineapp.screens.list.model.ListMovieUiData
+import com.example.cineapp.common.ui.CustomTopAppBar
 import com.example.cineapp.screens.list.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
-import com.example.cineapp.screens.list.model.MovieListUiEvent
-import com.example.cineapp.ui.theme.backgroundDark
+import com.example.cineapp.screens.list.model.ListMovieUiEvent
 
 @Composable
 fun MovieListScreen(
@@ -69,11 +61,11 @@ fun MovieListScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is MovieListUiEvent.NavigateToDetails -> {
+                is ListMovieUiEvent.NavigateToDetails -> {
                     navController.navigate(route = "movieDetail/${event.movieId}")
                 }
 
-                is MovieListUiEvent.ShowMessage -> {
+                is ListMovieUiEvent.ShowMessage -> {
                     snackbarHostState.showSnackbar(event.message)
                     viewModel.onSnackbarDismissed()
                 }
@@ -98,7 +90,7 @@ private fun MovieListContent(
     popular: ListUiState,
     topRated: ListUiState,
     upcoming: ListUiState,
-    onClick: (MovieUiData) -> Unit
+    onClick: (ListMovieUiData) -> Unit
 ) {
     LazyColumn(
         modifier =
@@ -140,6 +132,8 @@ private fun MovieListContent(
 
         item { MovieSession(label = "Upcoming", listUiState = upcoming, onClick = onClick) }
 
+        item { Spacer(modifier = Modifier.size(80.dp)) }
+
     }
 
 }
@@ -148,7 +142,7 @@ private fun MovieListContent(
 private fun MovieSession(
     label: String,
     listUiState: ListUiState,
-    onClick: (MovieUiData) -> Unit
+    onClick: (ListMovieUiData) -> Unit
 ) {
 
     Column(
@@ -181,8 +175,8 @@ private fun MovieSession(
 
 @Composable
 private fun MovieList(
-    movieList: List<MovieUiData>,
-    onClick: (MovieUiData) -> Unit
+    movieList: List<ListMovieUiData>,
+    onClick: (ListMovieUiData) -> Unit
 ) {
     LazyRow(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
         items(movieList) {
@@ -195,14 +189,14 @@ private fun MovieList(
 }
 
 @Composable
-private fun MovieItem(movieUiData: MovieUiData, onClick: (MovieUiData) -> Unit) {
+private fun MovieItem(listMovieUiData: ListMovieUiData, onClick: (ListMovieUiData) -> Unit) {
 
     ElevatedCard(
         modifier = Modifier
             .width(105.dp)
             .height(150.dp)
             .clickable {
-                onClick.invoke(movieUiData)
+                onClick.invoke(listMovieUiData)
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
         shape = RoundedCornerShape(12.dp)
@@ -211,8 +205,8 @@ private fun MovieItem(movieUiData: MovieUiData, onClick: (MovieUiData) -> Unit) 
             modifier = Modifier
                 .fillMaxSize(),
             contentScale = ContentScale.Crop,
-            model = movieUiData.imagePoster,
-            contentDescription = "${movieUiData.title} Poster image"
+            model = listMovieUiData.imagePoster,
+            contentDescription = "${listMovieUiData.title} Poster image"
         )
     }
 
@@ -220,7 +214,7 @@ private fun MovieItem(movieUiData: MovieUiData, onClick: (MovieUiData) -> Unit) 
 
 
 @Composable
-private fun MovieFeatured(movieUiData: MovieUiData, onClick: (MovieUiData) -> Unit) {
+private fun MovieFeatured(listMovieUiData: ListMovieUiData, onClick: (ListMovieUiData) -> Unit) {
 
     ElevatedCard(
         modifier = Modifier
@@ -231,7 +225,7 @@ private fun MovieFeatured(movieUiData: MovieUiData, onClick: (MovieUiData) -> Un
                 spotColor = Color.Black,
             )
             .clickable {
-                onClick.invoke(movieUiData)
+                onClick.invoke(listMovieUiData)
             },
         shape = RoundedCornerShape(0.dp)
     ) {
@@ -245,8 +239,8 @@ private fun MovieFeatured(movieUiData: MovieUiData, onClick: (MovieUiData) -> Un
                 modifier = Modifier
                     .fillMaxSize(),
                 contentScale = ContentScale.Crop,
-                model = movieUiData.imageBanner,
-                contentDescription = "${movieUiData.title} Banner image"
+                model = listMovieUiData.imageBanner,
+                contentDescription = "${listMovieUiData.title} Banner image"
             )
 
             Box(
@@ -279,15 +273,15 @@ private fun MovieFeatured(movieUiData: MovieUiData, onClick: (MovieUiData) -> Un
                         modifier = Modifier
                             .fillMaxSize(),
                         contentScale = ContentScale.Crop,
-                        model = movieUiData.imagePoster,
-                        contentDescription = "${movieUiData.title} Poster image",
+                        model = listMovieUiData.imagePoster,
+                        contentDescription = "${listMovieUiData.title} Poster image",
                     )
                 }
 
                 Spacer(modifier = Modifier.size(16.dp))
 
                 Text(
-                    text = movieUiData.title,
+                    text = listMovieUiData.title,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     fontSize = 32.sp,

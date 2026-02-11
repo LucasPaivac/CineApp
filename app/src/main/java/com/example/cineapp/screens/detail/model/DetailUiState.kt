@@ -1,14 +1,17 @@
 package com.example.cineapp.screens.detail.model
 
-import com.example.cineapp.common.model.MovieUiData
-
 data class DetailUiState(
-    val movie: MovieUiData = MovieUiData(
+    val movie: DetailMovieUiData = DetailMovieUiData(
         id = 0,
         title = "",
         overview = "",
         imagePoster = "",
-        imageBanner = ""
+        imageBanner = "",
+        genre = "",
+        releaseYear = "",
+        runtime = "",
+        voteAverage = "",
+        cast = emptyList()
     ),
     val isLoading: Boolean = false,
     val isError: Boolean = false,

@@ -2,7 +2,7 @@ package com.example.cineapp.common.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDTO(
+data class ListMovieDTO(
     val id: Int,
     val title: String,
     val overview: String,

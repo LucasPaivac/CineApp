@@ -3,13 +3,16 @@ package com.example.cineapp.repository
 import android.accounts.NetworkErrorException
 import com.example.cineapp.common.data.local.MovieCategory
 import com.example.cineapp.common.data.local.model.MovieEntity
-import com.example.cineapp.common.model.MovieList
+import com.example.cineapp.screens.list.model.ListMovie
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.data.remote.datasource.RemoteDataSource
-import com.example.cineapp.common.data.remote.model.MovieDTO
-import com.example.cineapp.common.model.MovieDetail
+import com.example.cineapp.common.data.remote.model.CastDTO
+import com.example.cineapp.common.data.remote.model.CreditsDTO
+import com.example.cineapp.common.data.remote.model.DetailMovieDTO
+import com.example.cineapp.common.data.remote.model.ListMovieDTO
+import com.example.cineapp.common.utils.toDetailMovie
+import com.example.cineapp.screens.detail.model.DetailMovie
 import com.example.cineapp.common.utils.toEntity
-import com.example.cineapp.common.utils.toMovieDetail
 import com.example.cineapp.common.utils.toMovieList
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
@@ -59,7 +62,7 @@ class MovieRepositoryTest {
     fun `Given no internet conection and no local data When getting nowPlayingMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<MovieDTO>>(NetworkErrorException("No internet connection"))
+            val remoteResult = Result.failure<List<ListMovieDTO>>(NetworkErrorException("No internet connection"))
 
             whenever(remote.getNowPlayingMovies()).thenReturn(remoteResult)
             local.nowPlaying = emptyList()
@@ -76,7 +79,7 @@ class MovieRepositoryTest {
         runTest {
 
             val moviesDtos = listOf(
-                MovieDTO(
+                ListMovieDTO(
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
@@ -132,14 +135,14 @@ class MovieRepositoryTest {
     fun `Given no internet connection and no local data When getting popularMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<MovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
 
             whenever(remote.getPopularMovies()).thenReturn(remoteResult)
             local.popular = emptyList()
 
             val result = underTest.getPopularMovies()
 
-            val expected = Result.failure<List<MovieList>>(
+            val expected = Result.failure<List<ListMovie>>(
                 remoteResult.exceptionOrNull() ?: Exception("Unknown Remote Error"))
 
             assertEquals(expected, result)
@@ -151,7 +154,7 @@ class MovieRepositoryTest {
         runTest {
 
             val moviesRemote = listOf(
-                MovieDTO(
+                ListMovieDTO(
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
@@ -204,14 +207,14 @@ class MovieRepositoryTest {
     fun `Given no internet connection and no local data When getting topRatedMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<MovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
 
             whenever(remote.getTopRatedMovies()).thenReturn(remoteResult)
             local.topRated = emptyList()
 
             val result = underTest.getTopRatedMovies()
 
-            val expected = Result.failure<List<MovieList>>(
+            val expected = Result.failure<List<ListMovie>>(
                 remoteResult.exceptionOrNull() ?: Exception("Unknown Remote Error"))
 
             assertEquals(expected, result)
@@ -223,7 +226,7 @@ class MovieRepositoryTest {
         runTest {
 
             val moviesRemote = listOf(
-                MovieDTO(
+                ListMovieDTO(
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
@@ -275,14 +278,14 @@ class MovieRepositoryTest {
     fun `Given no internet and no local data When getting upComingMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<MovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
 
             whenever(remote.getUpComingMovies()).thenReturn(remoteResult)
             local.upComing = emptyList()
 
             val result = underTest.getUpComingMovies()
 
-            val expected = Result.failure<List<MovieList>>(
+            val expected = Result.failure<List<ListMovie>>(
                 remoteResult.exceptionOrNull() ?: Exception("Unknown Remote Error")
             )
             assertEquals(expected, result)
@@ -294,7 +297,7 @@ class MovieRepositoryTest {
         runTest {
 
             val moviesRemote = listOf(
-                MovieDTO(
+                ListMovieDTO(
                     id = 1,
                     title = "Title1",
                     overview = "Overview1",
@@ -319,19 +322,24 @@ class MovieRepositoryTest {
     fun`Given remote success When getting Detail Movie by ID Then return a movieDetail remote data`(){
         runTest {
 
-            val remoteMovie = MovieDTO(
+            val remoteMovie = DetailMovieDTO(
                 id = 1,
                 title = "title1",
                 overview = "overview1",
                 postPath = "Image1",
-                backdropPath = "Image1"
+                backdropPath = "Image1",
+                genres = emptyList(),
+                releaseYear = "Teste",
+                runtime = 0,
+                voteAverage = 0.0,
+                cast = CreditsDTO(emptyList()),
             )
 
             whenever(remote.getMovieDetail("1")).thenReturn(Result.success(remoteMovie))
 
             val result = underTest.getMovieDetail("1")
 
-            val expected = Result.success(remoteMovie.toMovieDetail())
+            val expected = Result.success(remoteMovie.toDetailMovie())
 
             assertEquals(expected, result)
         }
@@ -341,13 +349,13 @@ class MovieRepositoryTest {
     fun `Given remote failure When getting Detail Movie by ID Then return a Result exception`(){
         runTest {
 
-            val remoteResult = Result.failure<MovieDTO>(NetworkErrorException())
+            val remoteResult = Result.failure<DetailMovieDTO>(NetworkErrorException())
 
             whenever(remote.getMovieDetail("1")).thenReturn(remoteResult)
 
             val result = underTest.getMovieDetail("1")
 
-            val expected = Result.failure<MovieDetail>(
+            val expected = Result.failure<DetailMovie>(
                 remoteResult.exceptionOrNull() ?: Exception("Unknown Remote Error")
             )
 

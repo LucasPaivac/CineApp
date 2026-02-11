@@ -10,7 +10,7 @@ import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.data.local.datasource.LocalDataSourceImpl
 import com.example.cineapp.common.data.local.datasource.LocalDataSource
 import com.example.cineapp.common.data.remote.datasource.RemoteDataSource
-import com.example.cineapp.common.data.service.MovieService
+import com.example.cineapp.common.data.remote.service.MovieService
 
 class CineAppApplication: Application() {
 

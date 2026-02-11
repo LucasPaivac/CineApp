@@ -1,13 +1,12 @@
 package com.example.cineapp.common.repository
 
-import android.util.Log
 import com.example.cineapp.common.data.local.MovieCategory
-import com.example.cineapp.common.model.MovieList
+import com.example.cineapp.screens.list.model.ListMovie
 import com.example.cineapp.common.data.local.datasource.LocalDataSource
 import com.example.cineapp.common.data.remote.datasource.RemoteDataSource
-import com.example.cineapp.common.model.MovieDetail
+import com.example.cineapp.common.utils.toDetailMovie
+import com.example.cineapp.screens.detail.model.DetailMovie
 import com.example.cineapp.common.utils.toEntity
-import com.example.cineapp.common.utils.toMovieDetail
 import com.example.cineapp.common.utils.toMovieList
 
 class MovieRepository(
@@ -16,7 +15,7 @@ class MovieRepository(
 ) {
 
     //Screen - List
-    suspend fun getNowPlayingMovies(): Result<List<MovieList>?> {
+    suspend fun getNowPlayingMovies(): Result<List<ListMovie>?> {
 
         return try {
             val result = remote.getNowPlayingMovies()
@@ -54,7 +53,7 @@ class MovieRepository(
 
     }
 
-    suspend fun getPopularMovies(): Result<List<MovieList>?> {
+    suspend fun getPopularMovies(): Result<List<ListMovie>?> {
 
         return try {
             val result = remote.getPopularMovies()
@@ -88,7 +87,7 @@ class MovieRepository(
         }
     }
 
-    suspend fun getTopRatedMovies(): Result<List<MovieList>?> {
+    suspend fun getTopRatedMovies(): Result<List<ListMovie>?> {
 
         return try {
             val result = remote.getTopRatedMovies()
@@ -120,7 +119,7 @@ class MovieRepository(
         }
     }
 
-    suspend fun getUpComingMovies(): Result<List<MovieList>?> {
+    suspend fun getUpComingMovies(): Result<List<ListMovie>?> {
 
         return try {
             val result = remote.getUpComingMovies()
@@ -151,13 +150,13 @@ class MovieRepository(
     }
 
     //Screen - Detail
-    suspend fun getMovieDetail(movieId: String): Result<MovieDetail?> {
+    suspend fun getMovieDetail(movieId: String): Result<DetailMovie?> {
 
         return try {
             val result = remote.getMovieDetail(movieId)
             if (result.isSuccess){
                 val remoteMovie = result.getOrNull()
-                Result.success(remoteMovie?.toMovieDetail())
+                Result.success(remoteMovie?.toDetailMovie())
             }else{
                 val exception = result.exceptionOrNull() ?: Exception("Unknown Remote Error")
                 Result.failure(exception)
