@@ -11,7 +11,6 @@ Este projeto demonstra proficiência nas seguintes áreas do ecossistema Android
 - **Networking com Retrofit & OkHttp**: Consumo de APIs REST com interceptores para autenticação via Bearer Token e gerenciamento de timeouts.
 - **Material Design 3 (M3)**: Implementação de temas dinâmicos, uso de Tokens de cor e tipografia padronizada.
 - **Gerenciamento de Imagens**: Uso da biblioteca Coil para carregamento assíncrono, cache e tratamento de estados de imagem (loading/error).
-- **Coil**: Carregamento assíncrono de imagens com gerenciamento de cache e tratamento de estados.
 
 ## 🧪 Qualidade de Código e Testes
 Para garantir uma base de código sólida e livre de regressões, o projeto implementa testes unitários focados na lógica de negócio e estados da UI:
