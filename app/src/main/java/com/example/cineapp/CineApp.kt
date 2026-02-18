@@ -7,16 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.cineapp.screens.detail.MovieDetailViewModel
-import com.example.cineapp.screens.detail.ui.MovieDetailScreen
-import com.example.cineapp.screens.list.MovieListViewModel
-import com.example.cineapp.screens.list.ui.MovieListScreen
+import com.example.cineapp.screens.detail.presentation.MovieDetailViewModel
+import com.example.cineapp.screens.detail.presentation.ui.MovieDetailScreen
+import com.example.cineapp.screens.list.presentation.MovieListViewModel
+import com.example.cineapp.screens.list.presentation.ui.MovieListScreen
 
 @Composable
 fun CineApp(
     snackbarHostState: SnackbarHostState,
-    listViewModel: MovieListViewModel,
-    detailViewModel: MovieDetailViewModel
 ) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "movieList") {
@@ -24,7 +22,6 @@ fun CineApp(
             MovieListScreen(
                 navController = navController,
                 snackbarHostState = snackbarHostState,
-                viewModel = listViewModel
             )
         }
 
@@ -37,8 +34,6 @@ fun CineApp(
             val movieId = requireNotNull(backStackEntry.arguments?.getString("itemId"))
             MovieDetailScreen(
                 movieId = movieId,
-                navHostController = navController,
-                detailViewModel = detailViewModel
             )
         }
     }

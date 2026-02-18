@@ -5,8 +5,6 @@ import com.example.cineapp.common.data.local.MovieCategory
 import com.example.cineapp.common.data.local.model.MovieEntity
 import com.example.cineapp.screens.list.model.ListMovie
 import com.example.cineapp.common.repository.MovieRepository
-import com.example.cineapp.common.data.remote.datasource.RemoteDataSource
-import com.example.cineapp.common.data.remote.model.CastDTO
 import com.example.cineapp.common.data.remote.model.CreditsDTO
 import com.example.cineapp.common.data.remote.model.DetailMovieDTO
 import com.example.cineapp.common.data.remote.model.ListMovieDTO
@@ -17,13 +15,11 @@ import com.example.cineapp.common.utils.toMovieList
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 
 class MovieRepositoryTest {
 
     val local: FakeListLocalDataSourceImpl = FakeListLocalDataSourceImpl()
-    val remote: RemoteDataSource = mock()
+    val remote: FakeListRemoteDataSourceImpl = FakeListRemoteDataSourceImpl()
 
     val underTest by lazy {
         MovieRepository(
@@ -48,7 +44,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getNowPlayingMovies()).thenReturn(Result.failure(NetworkErrorException()))
+            remote.nowPlaying = Result.failure(NetworkErrorException())
             local.nowPlaying = localMovieLists
 
             val result = underTest.getNowPlayingMovies()
@@ -64,7 +60,7 @@ class MovieRepositoryTest {
 
             val remoteResult = Result.failure<List<ListMovieDTO>>(NetworkErrorException("No internet connection"))
 
-            whenever(remote.getNowPlayingMovies()).thenReturn(remoteResult)
+            remote.nowPlaying = remoteResult
             local.nowPlaying = emptyList()
 
             val result = underTest.getNowPlayingMovies()
@@ -92,7 +88,7 @@ class MovieRepositoryTest {
 
             val moviesList = moviesDtos.map { it.toMovieList(MovieCategory.NowPlaying) }
 
-            whenever(remote.getNowPlayingMovies()).thenReturn(Result.success(moviesDtos))
+            remote.nowPlaying = Result.success(moviesDtos)
             local.nowPlaying = moviesEntity
 
             val result = underTest.getNowPlayingMovies()
@@ -121,7 +117,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getPopularMovies()).thenReturn(Result.failure(NetworkErrorException()))
+            remote.popular = Result.failure(NetworkErrorException())
             local.popular = localMovies
 
             val result = underTest.getPopularMovies()
@@ -135,9 +131,9 @@ class MovieRepositoryTest {
     fun `Given no internet connection and no local data When getting popularMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>>(NetworkErrorException())
 
-            whenever(remote.getPopularMovies()).thenReturn(remoteResult)
+            remote.popular = remoteResult
             local.popular = emptyList()
 
             val result = underTest.getPopularMovies()
@@ -165,7 +161,7 @@ class MovieRepositoryTest {
 
             val moviesLocal = moviesRemote.map { it.toEntity(MovieCategory.Popular) }
 
-            whenever(remote.getPopularMovies()).thenReturn(Result.success(moviesRemote))
+            remote.popular = Result.success(moviesRemote)
             local.popular = moviesLocal
 
             val result = underTest.getPopularMovies()
@@ -192,7 +188,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getTopRatedMovies()).thenReturn(Result.failure(NetworkErrorException()))
+            remote.topRated = Result.failure(NetworkErrorException())
             local.topRated = localMovieLists
 
             val result = underTest.getTopRatedMovies()
@@ -207,9 +203,9 @@ class MovieRepositoryTest {
     fun `Given no internet connection and no local data When getting topRatedMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>>(NetworkErrorException())
 
-            whenever(remote.getTopRatedMovies()).thenReturn(remoteResult)
+            remote.topRated = remoteResult
             local.topRated = emptyList()
 
             val result = underTest.getTopRatedMovies()
@@ -235,7 +231,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getTopRatedMovies()).thenReturn(Result.success(moviesRemote))
+            remote.topRated = Result.success(moviesRemote)
             local.topRated = moviesRemote.map { it.toEntity(MovieCategory.TopRated) }
 
             val result = underTest.getTopRatedMovies()
@@ -263,7 +259,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getUpComingMovies()).thenReturn(Result.failure(NetworkErrorException()))
+            remote.upComing = Result.failure(NetworkErrorException())
             local.upComing = localMovieLists
 
             val result = underTest.getUpComingMovies()
@@ -278,9 +274,9 @@ class MovieRepositoryTest {
     fun `Given no internet and no local data When getting upComingMovies Then return remote result`(){
         runTest {
 
-            val remoteResult = Result.failure<List<ListMovieDTO>?>(NetworkErrorException())
+            val remoteResult = Result.failure<List<ListMovieDTO>>(NetworkErrorException())
 
-            whenever(remote.getUpComingMovies()).thenReturn(remoteResult)
+            remote.upComing = remoteResult
             local.upComing = emptyList()
 
             val result = underTest.getUpComingMovies()
@@ -306,7 +302,7 @@ class MovieRepositoryTest {
                 )
             )
 
-            whenever(remote.getUpComingMovies()).thenReturn(Result.success(moviesRemote))
+            remote.upComing = Result.success(moviesRemote)
             local.upComing = moviesRemote.map { it.toEntity(MovieCategory.Upcoming) }
 
             val result = underTest.getUpComingMovies()
@@ -335,7 +331,7 @@ class MovieRepositoryTest {
                 cast = CreditsDTO(emptyList()),
             )
 
-            whenever(remote.getMovieDetail("1")).thenReturn(Result.success(remoteMovie))
+            remote.movieDetail = Result.success(remoteMovie)
 
             val result = underTest.getMovieDetail("1")
 
@@ -351,7 +347,7 @@ class MovieRepositoryTest {
 
             val remoteResult = Result.failure<DetailMovieDTO>(NetworkErrorException())
 
-            whenever(remote.getMovieDetail("1")).thenReturn(remoteResult)
+            remote.movieDetail = remoteResult
 
             val result = underTest.getMovieDetail("1")
 

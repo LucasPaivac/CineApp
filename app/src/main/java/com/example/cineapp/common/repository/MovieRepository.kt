@@ -8,8 +8,9 @@ import com.example.cineapp.common.utils.toDetailMovie
 import com.example.cineapp.screens.detail.model.DetailMovie
 import com.example.cineapp.common.utils.toEntity
 import com.example.cineapp.common.utils.toMovieList
+import javax.inject.Inject
 
-class MovieRepository(
+class MovieRepository @Inject constructor(
     private val local: LocalDataSource,
     private val remote: RemoteDataSource
 ) {

@@ -1,25 +1,24 @@
-package com.example.cineapp.screens.detail
+package com.example.cineapp.screens.detail.presentation
 
 import android.accounts.NetworkErrorException
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.cineapp.CineAppApplication
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.toDetailMovieUiData
-import com.example.cineapp.common.utils.toMovieUiData
+import com.example.cineapp.di.annotations.DispatcherIO
 import com.example.cineapp.screens.detail.model.DetailUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class MovieDetailViewModel(
+@HiltViewModel
+class MovieDetailViewModel @Inject constructor(
     private val repository: MovieRepository,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @DispatcherIO private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiMovieDetail = MutableStateFlow(DetailUiState())
@@ -53,20 +52,5 @@ class MovieDetailViewModel(
                 }
             }
         }
-    }
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-                val application =
-                    checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY]) as CineAppApplication
-                return MovieDetailViewModel(
-                    repository = application.repository
-                ) as T
-            }
-        }
-
     }
 }

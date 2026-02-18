@@ -5,8 +5,7 @@ import app.cash.turbine.test
 import com.example.cineapp.screens.detail.model.DetailMovie
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.toDetailMovieUiData
-import com.example.cineapp.common.utils.toMovieUiData
-import com.example.cineapp.screens.detail.MovieDetailViewModel
+import com.example.cineapp.screens.detail.presentation.MovieDetailViewModel
 import com.example.cineapp.screens.detail.model.DetailUiState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScheduler

@@ -1,4 +1,4 @@
-package com.example.cineapp.screens.list
+package com.example.cineapp.screens.list.presentation
 
 import android.accounts.NetworkErrorException
 import androidx.lifecycle.ViewModel
@@ -9,8 +9,11 @@ import com.example.cineapp.CineAppApplication
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.utils.toMovieUiData
+import com.example.cineapp.di.annotations.DispatcherIO
 import com.example.cineapp.screens.list.model.ListUiState
 import com.example.cineapp.screens.list.model.ListMovieUiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,10 +23,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
-class MovieListViewModel(
+@HiltViewModel
+class MovieListViewModel @Inject constructor(
     private val repository: MovieRepository,
     private val networkChecker: NetworkChecker,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @DispatcherIO private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _uiEvent = MutableSharedFlow<ListMovieUiEvent>(
@@ -205,20 +209,5 @@ class MovieListViewModel(
 
     fun onSnackbarDismissed() {
         isSnackbarShowing = false
-    }
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-
-                val application = checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY]) as CineAppApplication
-                return MovieListViewModel(
-                    repository = application.repository,
-                    networkChecker = application.networkChecker
-                ) as T
-            }
-        }
     }
 }

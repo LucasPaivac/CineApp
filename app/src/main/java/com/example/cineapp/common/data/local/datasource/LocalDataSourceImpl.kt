@@ -3,8 +3,9 @@ package com.example.cineapp.common.data.local.datasource
 import com.example.cineapp.common.data.local.MovieCategory
 import com.example.cineapp.common.data.local.MovieDao
 import com.example.cineapp.common.data.local.model.MovieEntity
+import javax.inject.Inject
 
-class LocalDataSourceImpl(
+class LocalDataSourceImpl @Inject constructor(
     private val dao: MovieDao
 ): LocalDataSource {
 

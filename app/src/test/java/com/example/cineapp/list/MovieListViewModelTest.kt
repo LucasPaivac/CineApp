@@ -8,7 +8,7 @@ import com.example.cineapp.common.utils.NetworkChecker
 import com.example.cineapp.common.repository.MovieRepository
 import com.example.cineapp.common.utils.toMovieUiData
 import com.example.cineapp.screens.list.model.ListMovieUiEvent
-import com.example.cineapp.screens.list.MovieListViewModel
+import com.example.cineapp.screens.list.presentation.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi

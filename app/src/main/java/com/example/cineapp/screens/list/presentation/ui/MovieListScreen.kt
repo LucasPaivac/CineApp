@@ -1,4 +1,4 @@
-package com.example.cineapp.screens.list.ui
+package com.example.cineapp.screens.list.presentation.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,12 +37,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.cineapp.R
 import com.example.cineapp.screens.list.model.ListMovieUiData
 import com.example.cineapp.common.ui.CustomTopAppBar
-import com.example.cineapp.screens.list.MovieListViewModel
+import com.example.cineapp.screens.list.presentation.MovieListViewModel
 import com.example.cineapp.screens.list.model.ListUiState
 import com.example.cineapp.screens.list.model.ListMovieUiEvent
 
@@ -50,7 +51,7 @@ import com.example.cineapp.screens.list.model.ListMovieUiEvent
 fun MovieListScreen(
     navController: NavHostController,
     snackbarHostState: SnackbarHostState,
-    viewModel: MovieListViewModel
+    viewModel: MovieListViewModel = hiltViewModel()
 ) {
 
     val nowPlayingMovies by viewModel.uiNowPlaying.collectAsState()
