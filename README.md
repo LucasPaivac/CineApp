@@ -12,6 +12,13 @@ Este projeto demonstra proficiência nas seguintes áreas do ecossistema Android
 - **Material Design 3 (M3)**: Implementação de temas dinâmicos, uso de Tokens de cor e tipografia padronizada.
 - **Gerenciamento de Imagens**: Uso da biblioteca Coil para carregamento assíncrono, cache e tratamento de estados de imagem (loading/error).
 
+## 🛠️ Arquitetura e Injeção de Dependência
+O projeto utiliza **Hilt** para Injeção de Dependência (DI), seguindo os princípios da Clean Architecture.
+- **Separação de Preocupações:** Utilização de `@Module` para organizar dependências de Rede (Retrofit), Banco de Dados (Room) e Lógica de Negócio.
+- **Abstração com @Binds:** As camadas de `Repository` interagem apenas com interfaces (`LocalDataSource` e `RemoteDataSource`), facilitando a manutenção e testabilidade.
+- **Escopos Inteligentes:** Uso de `SingletonComponent` para instâncias globais e `ViewModelComponent` para dependências vinculadas ao ciclo de vida da UI.
+- **Qualifiers Personalizados:** Implementação de `@DispatcherIO` para garantir a injeção correta de contextos de execução em Coroutines.
+
 ## 🧪 Qualidade de Código e Testes
 Para garantir uma base de código sólida e livre de regressões, o projeto implementa testes unitários focados na lógica de negócio e estados da UI:
 - **Turbine**: Utilizado para testar Kotlin Flows de forma concisa, garantindo que os estados do ViewModel sejam emitidos na ordem correta.
